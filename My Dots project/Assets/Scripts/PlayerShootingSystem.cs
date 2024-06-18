@@ -1,3 +1,4 @@
+using System;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public partial class PlayerShootingSystem : SystemBase
 {
+    public event EventHandler OnShoot;
     protected override void OnCreate()
     {
         RequireForUpdate<Player>();
@@ -30,7 +32,7 @@ public partial class PlayerShootingSystem : SystemBase
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(WorldUpdateAllocator);
 
-        foreach(RefRO<LocalTransform> localTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>().WithDisabled<Stunned>()) 
+        foreach((RefRO<LocalTransform> localTransform, Entity entity) in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>().WithDisabled<Stunned>().WithEntityAccess()) 
         {
             Entity spawnedEntity = entityCommandBuffer.Instantiate(spawnCubeConfig.cubePrefabEntity);
             entityCommandBuffer.SetComponent(spawnedEntity, new LocalTransform
@@ -40,6 +42,7 @@ public partial class PlayerShootingSystem : SystemBase
                 Scale = 1f
             });
 
+            OnShoot.Invoke(entity,EventArgs.Empty);
         }
 
         entityCommandBuffer.Playback(EntityManager);
