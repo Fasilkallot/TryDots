@@ -6,7 +6,7 @@ using UnityEngine;
 
 public partial class PlayerShootingSystem : SystemBase
 {
-    public event EventHandler OnShoot;
+    //public event EventHandler OnShoot;
     protected override void OnCreate()
     {
         RequireForUpdate<Player>();
@@ -42,7 +42,8 @@ public partial class PlayerShootingSystem : SystemBase
                 Scale = 1f
             });
 
-            OnShoot.Invoke(entity,EventArgs.Empty);
+            //  OnShoot.Invoke(entity,EventArgs.Empty);
+            PlayerShootManager.instance.PlayerShoot(localTransform.ValueRO.Position);
         }
 
         entityCommandBuffer.Playback(EntityManager);

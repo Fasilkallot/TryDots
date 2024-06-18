@@ -6,8 +6,15 @@ using UnityEngine;
 
 public class PlayerShootManager : MonoBehaviour
 {
+    public static PlayerShootManager instance {  get; private set; }
+
     [SerializeField] GameObject _shootPopup;
-    private void Start()
+
+    private void Awake()
+    {
+        instance = this;
+    }
+   /* private void Start()
     {
         PlayerShootingSystem playerShootingSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<PlayerShootingSystem>();
 
@@ -19,5 +26,10 @@ public class PlayerShootManager : MonoBehaviour
         Entity playerEntity = (Entity)sender;
         LocalTransform playerPosition = World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentData<LocalTransform>(playerEntity);
         Instantiate(_shootPopup, playerPosition.Position, Quaternion.identity);
+    }*/
+
+    public void PlayerShoot(Vector3 playerPosition)
+    {
+        Instantiate(_shootPopup, playerPosition, Quaternion.identity);
     }
 }
