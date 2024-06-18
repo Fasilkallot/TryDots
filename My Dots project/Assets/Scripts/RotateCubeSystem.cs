@@ -20,9 +20,9 @@ public partial struct RotateCubeSystem : ISystem
             localTransform.ValueRW = localTransform.ValueRO.RotateY(rotateSpeed.ValueRO.value * SystemAPI.Time.DeltaTime * po);
         }*/
 
-        RotatingCubeJob rotatingCubeJob = new RotatingCubeJob { deltaTime = SystemAPI.Time.DeltaTime };
+       // RotatingCubeJob rotatingCubeJob = new RotatingCubeJob { deltaTime = SystemAPI.Time.DeltaTime };
 
-        rotatingCubeJob.ScheduleParallel();
+       // rotatingCubeJob.ScheduleParallel();
     } 
 
 }
