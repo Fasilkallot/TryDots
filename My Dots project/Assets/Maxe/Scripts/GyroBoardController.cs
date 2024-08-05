@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GyroBoardControl : MonoBehaviour
+public class GyroBoardController : MonoBehaviour
 {
     [SerializeField] private float _maxRotation = 15f; // Maximum rotation angle in degrees
     [SerializeField] private float _speed = 100f;       // Speed of rotation
@@ -45,7 +45,7 @@ public class GyroBoardControl : MonoBehaviour
         _currentZRotation = Mathf.Clamp(_currentZRotation, -_maxRotation, _maxRotation);
 
         // Smoothly return to neutral position if there's no significant movement
-        if (acceleration.sqrMagnitude < 0.01f)
+        if (acceleration.sqrMagnitude < 1.1f)
         {
             _currentXRotation = Mathf.Lerp(_currentXRotation, 0f, Time.fixedDeltaTime * _returnSpeed);
             _currentZRotation = Mathf.Lerp(_currentZRotation, 0f, Time.fixedDeltaTime * _returnSpeed);
